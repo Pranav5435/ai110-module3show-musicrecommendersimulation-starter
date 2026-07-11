@@ -88,15 +88,45 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
-
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+Top recommendations:
+1. City of Sparks
+   Final score: 9.89
+   Reasons:
+     - genre match (+4.0)
+     - mood match (+2.0)
+     - energy close to target (+1.0)
+     - balance close to target (+1.0)
+     - danceability close to target (+1.0)
+     - acousticness close to target (+0.9)
+2. Gym Hero
+   Final score: 3.87
+   Reasons:
+     - energy close to target (+1.0)
+     - balance close to target (+1.0)
+     - danceability close to target (+1.0)
+     - acousticness close to target (+0.9)
+3. Golden Hour Drive
+   Final score: 3.79
+   Reasons:
+     - energy close to target (+1.0)
+     - balance close to target (+0.9)
+     - danceability close to target (+0.9)
+     - acousticness close to target (+1.0)
+4. Neon Alley
+   Final score: 3.75
+   Reasons:
+     - energy close to target (+0.9)
+     - balance close to target (+0.9)
+     - danceability close to target (+0.9)
+     - acousticness close to target (+1.0)
+5. Sunrise City
+   Final score: 3.69
+   Reasons:
+     - energy close to target (+0.9)
+     - balance close to target (+1.0)
+     - danceability close to target (+0.9)
+     - acousticness close to target (+0.9)
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
