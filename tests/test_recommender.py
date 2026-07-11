@@ -1,4 +1,4 @@
-from src.recommender import Song, UserProfile, Recommender
+from src.recommender import Song, UserProfile, Recommender, score_song
 
 def make_small_recommender() -> Recommender:
     songs = [
@@ -59,3 +59,59 @@ def test_explain_recommendation_returns_non_empty_string():
     explanation = rec.explain_recommendation(user, song)
     assert isinstance(explanation, str)
     assert explanation.strip() != ""
+
+
+def test_score_song_uses_baseline_weights():
+    user_prefs = {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.8,
+        "balance": 0.9,
+        "danceability": 0.8,
+        "acousticness": 0.2,
+    }
+    song = {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.8,
+        "balance": 0.9,
+        "danceability": 0.8,
+        "acousticness": 0.2,
+    }
+
+    score, reasons = score_song(user_prefs, song)
+
+    assert score == 10.0
+    assert reasons
+
+
+def test_numeric_features_score_by_closeness_to_target():
+    user_prefs = {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.8,
+        "balance": 0.9,
+        "danceability": 0.8,
+        "acousticness": 0.2,
+    }
+    near_match = {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.8,
+        "balance": 0.9,
+        "danceability": 0.8,
+        "acousticness": 0.2,
+    }
+    far_match = {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.2,
+        "balance": 0.9,
+        "danceability": 0.8,
+        "acousticness": 0.2,
+    }
+
+    near_score, _ = score_song(user_prefs, near_match)
+    far_score, _ = score_song(user_prefs, far_match)
+
+    assert near_score > far_score

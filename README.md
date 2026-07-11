@@ -28,7 +28,27 @@ Some prompts to answer:
 - How do you choose which songs to recommend
 
 You can include a simple diagram or bullet list if helpful.
+This recommender takes a user's music taste and a catalog of songs, then orders the songs by how well they match what the user would actually want to listen to. Real platforms like Spotify or YouTube do something similar at a much larger scale, often blending content-based filtering (matching a user's preferences to a song's attributes) with collaborative filtering (using patterns from other users' behavior). This version focuses only on content-based filtering. It scores every song based on how closely it matches the user's preferred genre, mood, energy, emotional balance, danceability, and acousticness, then ranks the full list from highest to lowest score to produce the top recommendations.
 
+Finalized algorithm recipe:
+- Genre match: +4.0 points
+- Mood match: +2.0 points
+- Energy closeness: up to +1.0 points
+- Balance closeness: up to +1.0 points
+- Danceability closeness: up to +1.0 points
+- Acousticness closeness: up to +1.0 points
+- Maximum possible score: 10.0
+
+Since genre and mood carry the most weight, the system may under-value songs that are a strong overall vibe match but fall in a different genre category, potentially creating a filter bubble around the user's stated genre.
+
+Song and UserProfile features:
+
+- genre
+- mood
+- energy
+- balance
+- danceability
+- acousticness
 ---
 
 ## Getting Started
