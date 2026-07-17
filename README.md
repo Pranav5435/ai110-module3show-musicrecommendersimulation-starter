@@ -1,33 +1,10 @@
 # 🎵 Music Recommender Simulation
 
 ## Project Summary
-
-In this project you will build and explain a small music recommender system.
-
-Your goal is to:
-
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
-
+This project simulates a basic content-based music recommender. It takes a user's taste profile, genre, mood, energy, emotional balance, danceability, and acousticness, and scores every song in a catalog based on how closely it matches those preferences. Genre and mood are weighted the heaviest, acting as strong signals of fit, while the remaining features are scored by closeness rather than exact match. The system then ranks the full catalog and returns the top matches, giving a clear, explained recommendation for why each song was selected.
 ---
 
 ## How The System Works
-
-Explain your design in plain language.
-
-Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
 This recommender takes a user's music taste and a catalog of songs, then orders the songs by how well they match what the user would actually want to listen to. Real platforms like Spotify or YouTube do something similar at a much larger scale, often blending content-based filtering (matching a user's preferences to a song's attributes) with collaborative filtering (using patterns from other users' behavior). This version focuses only on content-based filtering. It scores every song based on how closely it matches the user's preferred genre, mood, energy, emotional balance, danceability, and acousticness, then ranks the full list from highest to lowest score to produce the top recommendations.
 
 Finalized algorithm recipe:
@@ -134,39 +111,14 @@ Top recommendations:
 ---
 
 ## Experiments You Tried
-
-Use this section to document the experiments you ran. For example:
-
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
-
+I tested six distinct user profiles: house/electronic, chill/lo-fi, deep/intense rock, plus three adversarial edge cases (a conflicted energy profile with contradictory preferences, a genre-trap profile, and an extreme-boundary profile). Across all profiles, a clear pattern emerged: whichever song matched the user's stated genre and mood jumped far ahead of the rest, while every other song clustered together in a much lower score range based only on closeness scoring. The lo-fi profile stood out as an exception, since multiple songs scored highly (above 7.0), showing that the closeness-based features can meaningfully separate songs even without a genre match, when there's enough dataset coverage for that genre. Full results and analysis are documented in model_card.md.
 ---
 
 ## Limitations and Risks
-
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
-
+One clear limitation is that genre and mood create a scoring "cliff" instead of a smooth ranking. Since a genre match alone can be worth up to 4.0 out of 10 points, any song that hits the user's stated genre jumps way ahead of everything else, even if some of those other songs are nearly perfect matches on energy, mood, and vibe. This means the system struggles to meaningfully differentiate between non-matching songs, since their scores cluster tightly together regardless of how close or far their actual vibe is. In practice, this could create a filter bubble, where users only ever see their exact stated genre reinforced. The dataset itself is also limited to 18 songs across a handful of genres, so results may not generalize well to tastes outside what's represented (see model_card.md for a full breakdown of missing genres).
 ---
 
 ## Reflection
-
-Read and complete `model_card.md`:
-
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
+Building this recommender showed me how directly a scoring system's weights shape its behavior, watching one song score 9.89 while everything else clustered in the high 3s made the abstract idea of "genre bias" into something concrete I could see in my own terminal. It also clarified how recommenders turn raw data into predictions: it's not magic, it's just a defined set of rules applied consistently across a dataset. Where this gets ethically interesting is realizing that even a simple, transparent scoring system like mine can create a filter bubble, and real platforms with much more complex and opaque logic likely have similar effects at a much larger scale. Full reflection is available in model_card.md.
 
 
